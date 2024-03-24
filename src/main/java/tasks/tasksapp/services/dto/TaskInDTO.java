@@ -8,6 +8,8 @@ public class TaskInDTO {
     private String title;
     private String description;
 
+    private LocalDateTime eta;
+
     public String getTitle() {
         return title;
     }
@@ -31,6 +33,4 @@ public class TaskInDTO {
     public void setEta(LocalDateTime eta) {
         this.eta = eta;
     }
-
-    private LocalDateTime eta;
 }

@@ -17,7 +17,8 @@ public class Task {
     private LocalDateTime createdDate;
     private LocalDateTime eta;
 
-
+    private boolean finished;
+    private TaskStatus taskStatus;
 
     public LocalDateTime getCreatedDate() {
         return createdDate;
@@ -65,7 +66,4 @@ public class Task {
     public void setEta(LocalDateTime eta) {
         this.eta = eta;
     }
-
-    private boolean finished;
-    private TaskStatus taskStatus;
 }
