@@ -31,6 +31,10 @@ public class Task {
         return finished;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
