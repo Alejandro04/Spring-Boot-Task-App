@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,6 +24,9 @@ public class Task {
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
@@ -49,6 +53,18 @@ public class Task {
 
     public String getTitle() {
         return title;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public void setTitle(String title) {
