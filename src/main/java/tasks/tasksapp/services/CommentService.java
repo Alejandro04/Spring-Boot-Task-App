@@ -20,6 +20,8 @@ public class CommentService {
 
     public Comment addCommentToTask(Long taskId, Comment comment) {
         Optional<Task> optionalTask = this.taskRepository.findById(taskId);
+
+        System.out.println(comment);
         optionalTask.ifPresent(task -> {
             comment.setTask(task);
             Comment newComment = new Comment();

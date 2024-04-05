@@ -17,8 +17,8 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping()
-    public Comment addCommentToTask(@RequestBody Comment comment, @RequestBody Long taskId) {
+    @PostMapping("/{taskId}")
+    public Comment addCommentToTask(@RequestBody Comment comment, @PathVariable("taskId") Long taskId) {
         return commentService.addCommentToTask(taskId, comment);
     }
 
