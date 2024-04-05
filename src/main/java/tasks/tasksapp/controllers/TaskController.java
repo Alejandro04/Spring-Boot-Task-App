@@ -2,6 +2,7 @@ package tasks.tasksapp.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tasks.tasksapp.persistence.entity.Comment;
 import tasks.tasksapp.persistence.entity.Task;
 import tasks.tasksapp.persistence.entity.TaskStatus;
 import tasks.tasksapp.services.TaskService;
@@ -44,5 +45,10 @@ public class TaskController {
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         this.taskService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{taskId}/comments")
+    public List<Comment> getCommentsByTaskId(@PathVariable("taskId") Long taskId) {
+        return taskService.findCommentsByTaskId(taskId);
     }
 }

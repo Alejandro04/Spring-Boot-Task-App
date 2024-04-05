@@ -5,8 +5,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import tasks.tasksapp.mapper.TaskInDTOToTask;
+import tasks.tasksapp.persistence.entity.Comment;
 import tasks.tasksapp.persistence.entity.Task;
 import tasks.tasksapp.persistence.entity.TaskStatus;
+import tasks.tasksapp.persistence.repository.CommentRepository;
 import tasks.tasksapp.persistence.repository.TaskRepository;
 import tasks.tasksapp.services.dto.TaskInDTO;
 
@@ -18,10 +20,12 @@ public class TaskService {
 
     private final TaskRepository repository;
     private final TaskInDTOToTask mapper;
+    private final CommentRepository commentRepository;
 
-    public TaskService(TaskRepository repository, TaskInDTOToTask mapper) {
+    public TaskService(TaskRepository repository, TaskInDTOToTask mapper, CommentRepository commentRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.commentRepository = commentRepository;
     }
 
     public List<Task> findAll() {
@@ -53,5 +57,10 @@ public class TaskService {
         }
 
         this.repository.deleteById(id);
+    }
+
+    public List<Comment> findCommentsByTaskId(Long taskId) {
+        Optional<Task> optionalTask = this.repository.findById(taskId);
+        return optionalTask.map(Task::getComments).orElse(null);
     }
 }
