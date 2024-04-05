@@ -51,15 +51,4 @@ public class TaskController {
     public List<Comment> getCommentsByTaskId(@PathVariable("taskId") Long taskId) {
         return taskService.findCommentsByTaskId(taskId);
     }
-
-    @PostMapping("/{taskId}/comments")
-    public Comment addCommentToTask(@PathVariable("taskId") Long taskId, @RequestBody Comment comment) {
-        return taskService.addCommentToTask(taskId, comment);
-    }
-
-    @DeleteMapping("/{taskId}/comments/{commentId}")
-    public ResponseEntity<Void> deleteCommentFromTask(@PathVariable("taskId") Long taskId, @PathVariable("commentId") Long commentId) {
-        taskService.deleteCommentFromTask(taskId, commentId);
-        return ResponseEntity.noContent().build();
-    }
 }

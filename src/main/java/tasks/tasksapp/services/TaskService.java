@@ -63,24 +63,4 @@ public class TaskService {
         Optional<Task> optionalTask = this.repository.findById(taskId);
         return optionalTask.map(Task::getComments).orElse(null);
     }
-
-    public Comment addCommentToTask(Long taskId, Comment comment) {
-        Optional<Task> optionalTask = this.repository.findById(taskId);
-        optionalTask.ifPresent(task -> {
-            comment.setTask(task);
-            Comment newComment = new Comment();
-            newComment.setText(comment.getText());
-            newComment.setCreatedDate(comment.getCreatedDate());
-            this.commentRepository.save(newComment);
-        });
-        return comment;
-    }
-
-    public void deleteCommentFromTask(Long taskId, Long commentId) {
-        Optional<Task> optionalTask = this.repository.findById(taskId);
-        optionalTask.ifPresent(task -> {
-            task.getComments().removeIf(comment -> comment.getId().equals(commentId));
-            this.repository.save(task);
-        });
-    }
 }
