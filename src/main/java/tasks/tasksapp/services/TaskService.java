@@ -2,7 +2,6 @@ package tasks.tasksapp.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import tasks.tasksapp.mapper.TaskInDTOToTask;
 import tasks.tasksapp.persistence.entity.Comment;
@@ -14,6 +13,7 @@ import tasks.tasksapp.services.dto.TaskInDTO;
 
 import java.util.List;
 import java.util.Optional;
+import tasks.tasksapp.kafka.MessageProducer;
 
 @Service
 public class TaskService {
@@ -21,11 +21,13 @@ public class TaskService {
     private final TaskRepository repository;
     private final TaskInDTOToTask mapper;
     private final CommentRepository commentRepository;
+    private final MessageProducer messageProducer;
 
-    public TaskService(TaskRepository repository, TaskInDTOToTask mapper, CommentRepository commentRepository) {
+    public TaskService(TaskRepository repository, TaskInDTOToTask mapper, CommentRepository commentRepository, MessageProducer messageProducer) {
         this.repository = repository;
         this.mapper = mapper;
         this.commentRepository = commentRepository;
+        this.messageProducer = messageProducer;
     }
 
     public List<Task> findAll() {
@@ -33,6 +35,7 @@ public class TaskService {
     }
 
     public Task createTask(TaskInDTO taskInDTO) {
+        this.sendMessage();
         Task task = mapper.map(taskInDTO);
         return this.repository.save(task);
     }
@@ -62,5 +65,10 @@ public class TaskService {
     public List<Comment> findCommentsByTaskId(Long taskId) {
         Optional<Task> optionalTask = this.repository.findById(taskId);
         return optionalTask.map(Task::getComments).orElse(null);
+    }
+
+    private void sendMessage(){
+        var message = "task created";
+        messageProducer.sendMessage("my-topic", message);
     }
 }
