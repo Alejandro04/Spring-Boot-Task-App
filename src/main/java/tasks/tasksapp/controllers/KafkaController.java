@@ -2,7 +2,7 @@ package tasks.tasksapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tasks.tasksapp.kafka.MessageProducer;
+import tasks.tasksapp.context.kafka.MessageProducer;
 
 @RestController
 @RequestMapping("/kafka")

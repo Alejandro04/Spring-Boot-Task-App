@@ -1,4 +1,4 @@
-package tasks.tasksapp.kafka;
+package tasks.tasksapp.context.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
