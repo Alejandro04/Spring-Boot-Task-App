@@ -1,4 +1,4 @@
-package tasks.tasksapp.kafka;
+package tasks.tasksapp.context.kafka;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

@@ -2,6 +2,7 @@ package tasks.tasksapp.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tasks.tasksapp.mapper.TaskInDTOToTask;
 import tasks.tasksapp.persistence.entity.Comment;
@@ -13,7 +14,7 @@ import tasks.tasksapp.services.dto.TaskInDTO;
 
 import java.util.List;
 import java.util.Optional;
-import tasks.tasksapp.kafka.MessageProducer;
+import tasks.tasksapp.context.kafka.MessageProducer;
 
 @Service
 public class TaskService {
@@ -30,12 +31,13 @@ public class TaskService {
         this.messageProducer = messageProducer;
     }
 
+    @Cacheable("tasks")
     public List<Task> findAll() {
         return this.repository.findAll();
     }
 
     public Task createTask(TaskInDTO taskInDTO) {
-        this.sendMessage();
+        //this.sendMessage();
         Task task = mapper.map(taskInDTO);
         return this.repository.save(task);
     }
